@@ -16,8 +16,26 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Send formData to the backend
-    console.log('Logging in user:', formData);
+    fetch('http://localhost:3000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        console.log('Login successful:', data.message);
+        // Optionally, redirect the user or update the UI
+      } else {
+        console.error('Login failed:', data.message);
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   return (
