@@ -1,10 +1,11 @@
 // src/views/CourseListView.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, CardContent, Typography, Button, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Button, Grid, CircularProgress } from '@mui/material';
 
 function CourseListView() {
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -16,11 +17,13 @@ function CourseListView() {
       .then(response => {
         console.log('Fetched courses:', response.data); // Debugging log
         setCourses(response.data);
+  
       })
       .catch(error => console.error('Error fetching courses:', error));
   }, []);
 
   const handleRegisterClick = (course) => {
+    setLoading(prevLoading => ({...prevLoading, [course.id]: true}));
     const paymentData = {
       amount: "10",
       currency: "ETB",
@@ -28,7 +31,7 @@ function CourseListView() {
       first_name: "Bilen",
       last_name: "Gizachew",
       phone_number: "0912345678",
-      tx_ref: "chewatatest-666900",
+      tx_ref: "chewatatest-666909010",
       callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
       return_url: "https://www.google.com/"
     };
@@ -37,10 +40,19 @@ function CourseListView() {
       .then(response => {
         console.log('Payment initialized:', response.data);
         // Handle success, e.g., redirect to a success page or show a message
+        if(response.data.status === 'success'){
+        const checkoutUrl = response.data.data.checkout_url;
+        window.location.href = checkoutUrl;
+        }
+        else{
+          console.error('Payment initialization failed:', response.data.message);
+        }
       })
       .catch(error => {
         console.error('Error initializing payment:', error);
         // Handle error, e.g., show an error message
+      }).finally(() => {
+        setLoading(prevLoading => ({...prevLoading, [course.id]: false}));
       });
   };
 
@@ -68,8 +80,9 @@ function CourseListView() {
                   color="primary" 
                   style={{ marginTop: '10px' }}
                   onClick={() => handleRegisterClick(course)}
+                  disabled={loading[course.id]} // Disable button when loading
                 >
-                  Register
+                  {loading[course.id] ? <CircularProgress size={24} color="inherit" /> : 'Register'}
                 </Button>
               </CardContent>
             </Card>
