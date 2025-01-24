@@ -3,8 +3,10 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 
 function Register() {
   const [formData, setFormData] = useState({
-    username: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    address: '',
     password: ''
   });
 
@@ -29,9 +31,18 @@ function Register() {
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Username"
-            name="username"
-            value={formData.username}
+            label="First Name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Last Name"
+            name="lastName"
+            value={formData.lastName}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -42,6 +53,15 @@ function Register() {
             type="email"
             name="email"
             value={formData.email}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Address"
+            name="address"
+            value={formData.address}
             onChange={handleChange}
             fullWidth
             margin="normal"
