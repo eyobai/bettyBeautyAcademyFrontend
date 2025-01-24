@@ -28,7 +28,13 @@ function Register() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Success:', data);
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        console.log('Registration successful:', data.message);
+        // Optionally, redirect the user or update the UI
+      } else {
+        console.error('Registration failed:', data.message);
+      }
     })
     .catch((error) => {
       console.error('Error:', error);
