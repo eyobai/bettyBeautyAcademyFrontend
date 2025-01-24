@@ -10,7 +10,7 @@ function CourseListView() {
     const token = localStorage.getItem('token');
     axios.get('http://localhost:3000/courses', {
       headers: {
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzM3NzEwMDQwLCJleHAiOjE3Mzc3MTM2NDB9.3b6k4ifmsK08Zop3IidGQZvoJoQvUQrT0_xhmKo5DqM`
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzM3NzIyNDAzLCJleHAiOjE3Mzc3MjYwMDN9.JAWTvQjv8WdyoOzZHOn-maOEMN8JvWEZm-rcwjJnvuI`
       }
     })
       .then(response => {
@@ -19,7 +19,6 @@ function CourseListView() {
       })
       .catch(error => console.error('Error fetching courses:', error));
   }, []);
-
 
   const handleRegisterClick = (course) => {
     const paymentData = {
@@ -44,6 +43,7 @@ function CourseListView() {
         // Handle error, e.g., show an error message
       });
   };
+
   return (
     <div>
       <Typography variant="h4" component="h1" gutterBottom>
