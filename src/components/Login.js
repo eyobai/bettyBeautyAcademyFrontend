@@ -27,6 +27,7 @@ function Login() {
     .then(data => {
       if (data.token) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
         console.log('Login successful:', data.message);
         // Optionally, redirect the user or update the UI
       } else {
