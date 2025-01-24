@@ -20,10 +20,7 @@ function CourseListView() {
       .catch(error => console.error('Error fetching courses:', error));
   }, []);
 
-  const handleRegisterClick = (course) => {
 
-    console.log('Course data:', course);
-  };
   const handleRegisterClick = (course) => {
     const paymentData = {
       amount: "10",
