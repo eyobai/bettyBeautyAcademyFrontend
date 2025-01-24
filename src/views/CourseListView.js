@@ -7,7 +7,12 @@ function CourseListView() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/courses')
+    const token = localStorage.getItem('token');
+    axios.get('http://localhost:3000/courses', {
+      headers: {
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzM3NzEwMDQwLCJleHAiOjE3Mzc3MTM2NDB9.3b6k4ifmsK08Zop3IidGQZvoJoQvUQrT0_xhmKo5DqM`
+      }
+    })
       .then(response => {
         console.log('Fetched courses:', response.data); // Debugging log
         setCourses(response.data);
