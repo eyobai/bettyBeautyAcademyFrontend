@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,8 +38,9 @@ function Login() {
       if (data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        setUser(data.user);
         console.log('Login successful:', data.message);
-        // Optionally, redirect the user or update the UI
+        navigate('/courses');
       } else {
         console.error('Login failed:', data.message);
       }
@@ -70,6 +81,14 @@ function Login() {
             Login
           </Button>
         </form>
+        {user && (
+          <div>
+            <h2>Welcome, {user.name}!</h2>
+            <p>Email: {user.email}</p>
+            <p>Contact: {user.contactDetails}</p>
+            <p>Address: {user.address}</p>
+          </div>
+        )}
       </Box>
     </Container>
   );
