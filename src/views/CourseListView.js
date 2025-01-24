@@ -24,7 +24,29 @@ function CourseListView() {
 
     console.log('Course data:', course);
   };
+  const handleRegisterClick = (course) => {
+    const paymentData = {
+      amount: "10",
+      currency: "ETB",
+      email: "abebech_bekele@gmail.com",
+      first_name: "Bilen",
+      last_name: "Gizachew",
+      phone_number: "0912345678",
+      tx_ref: "chewatatest-666900",
+      callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+      return_url: "https://www.google.com/"
+    };
 
+    axios.post('http://localhost:3000/payments/initialize', paymentData)
+      .then(response => {
+        console.log('Payment initialized:', response.data);
+        // Handle success, e.g., redirect to a success page or show a message
+      })
+      .catch(error => {
+        console.error('Error initializing payment:', error);
+        // Handle error, e.g., show an error message
+      });
+  };
   return (
     <div>
       <Typography variant="h4" component="h1" gutterBottom>
